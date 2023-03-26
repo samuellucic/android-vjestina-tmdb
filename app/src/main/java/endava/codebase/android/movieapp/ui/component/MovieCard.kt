@@ -1,7 +1,10 @@
 package endava.codebase.android.movieapp.ui.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -13,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import endava.codebase.android.movieapp.mock.MoviesMock
 import endava.codebase.android.movieapp.ui.theme.Shapes
+import endava.codebase.android.movieapp.ui.theme.spacing
 
 data class MovieCardViewState(
     val title: String,
@@ -23,15 +27,19 @@ data class MovieCardViewState(
 @Composable
 fun MovieCard(
     movieCardViewState: MovieCardViewState,
+    onFavouriteChange: () -> Unit,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val isFavourite = remember { mutableStateOf(movieCardViewState.isFavorite) }
     Card(
         modifier = modifier
-            .padding(6.dp)
+            .clickable(
+                onClick = onClick
+            )
             .wrapContentSize(),
         shape = Shapes.medium,
         elevation = 4.dp,
+
     ) {
         Box(
             modifier = Modifier,
@@ -45,8 +53,8 @@ fun MovieCard(
                 alignment = Alignment.Center,
             )
             FavouriteButton(
-                isFavourite = isFavourite.value,
-                onFavouriteChange = { isFavourite.value = it },
+                isFavourite = movieCardViewState.isFavorite,
+                onFavouriteChange = onFavouriteChange,
                 modifier = Modifier
                     .align(Alignment.TopStart)
             )
@@ -57,15 +65,20 @@ fun MovieCard(
 @Preview
 @Composable
 fun MovieCardPreview() {
+    val isFavourite = remember { mutableStateOf(false) }
+
     val movie = MoviesMock.getMoviesList()[0]
     MovieCard(
         movieCardViewState = MovieCardViewState(
             title = movie.title,
             imageUrl = movie.imageUrl.toString(),
-            isFavorite = movie.isFavorite,
+            isFavorite = isFavourite.value,
         ),
         modifier = Modifier
             .height(450.dp)
             .width(300.dp)
+            .padding(MaterialTheme.spacing.small),
+        onFavouriteChange = { isFavourite.value = !isFavourite.value },
+        onClick = {  }
     )
 }

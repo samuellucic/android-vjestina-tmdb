@@ -2,6 +2,7 @@ package endava.codebase.android.movieapp.ui.component
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,8 +17,8 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import endava.codebase.android.movieapp.mock.MoviesMock
 import endava.codebase.android.movieapp.ui.theme.Gray700
-import endava.codebase.android.movieapp.ui.theme.Shapes
 import endava.codebase.android.movieapp.ui.theme.proximaNova
+import endava.codebase.android.movieapp.ui.theme.spacing
 
 
 data class ActorCardViewState(
@@ -33,9 +34,8 @@ fun ActorCard(
 ) {
     Card(
         modifier = modifier
-            .padding(6.dp)
             .wrapContentSize(),
-        shape = Shapes.medium,
+        shape = MaterialTheme.shapes.medium,
         elevation = 4.dp,
     ) {
         Column(
@@ -49,15 +49,19 @@ fun ActorCard(
                 contentScale = ContentScale.Crop,
                 alignment = Alignment.Center,
                 modifier = Modifier
-                    .weight(3.5f)
+                    .weight(1f)
                     .fillMaxHeight(),
             )
             Text(
                 text = actorCardViewState.name,
                 modifier = Modifier
-                    .padding(10.dp, 5.dp, 28.dp, 0.dp)
-                    .wrapContentHeight()
-                    .weight(1f),
+                    .padding(
+                        MaterialTheme.spacing.small,
+                        MaterialTheme.spacing.small,
+                        MaterialTheme.spacing.large,
+                        MaterialTheme.spacing.small
+                    )
+                    .wrapContentHeight(),
                 color = Color.Black,
                 fontStyle = FontStyle.Normal,
                 fontWeight = FontWeight.W800,
@@ -68,9 +72,13 @@ fun ActorCard(
             Text(
                 text = actorCardViewState.character,
                 modifier = Modifier
-                    .padding(10.dp, 0.dp, 7.dp, 5.dp)
-                    .wrapContentHeight()
-                    .weight(1f),
+                    .padding(
+                        MaterialTheme.spacing.small,
+                        MaterialTheme.spacing.default,
+                        MaterialTheme.spacing.small,
+                        MaterialTheme.spacing.medium
+                    )
+                    .wrapContentHeight(),
                 color = Gray700,
                 fontSize = 12.sp,
                 fontStyle = FontStyle.Normal,
@@ -95,7 +103,8 @@ private fun ActorCardPreview() {
             actor.character
         ),
         Modifier
-            .height(289.dp)
-            .width(180.dp),
+            .height(320.dp)
+            .width(150.dp)
+            .padding(6.dp),
     )
 }

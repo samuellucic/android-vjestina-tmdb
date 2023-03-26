@@ -38,7 +38,11 @@ fun UserScoreProgressBar(
         ) {
             drawCircle(
                 color = Color.Green.copy(alpha = 0.3f),
-                radius = radius.toPx(),
+                radius = radius.minus(thickness.div(2)).toPx(),
+                style = Stroke(
+                    width = thickness.toPx(),
+                    cap = StrokeCap.Round
+                )
             )
             drawArc(
                 color = Color.Green,
@@ -51,10 +55,6 @@ fun UserScoreProgressBar(
                 ),
                 size = Size(size.minus(thickness).toPx(), size.minus(thickness).toPx()),
                 topLeft = Offset(thickness.div(2).toPx(), thickness.div(2).toPx())
-            )
-            drawCircle(
-                color = Color.White.copy(alpha = 1f),
-                radius = radius.minus(thickness).toPx()
             )
         }
         Text(

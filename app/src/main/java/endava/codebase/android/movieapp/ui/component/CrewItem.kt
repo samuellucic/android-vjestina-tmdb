@@ -1,14 +1,14 @@
 package endava.codebase.android.movieapp.ui.component
 
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import endava.codebase.android.movieapp.mock.MoviesMock
 import endava.codebase.android.movieapp.ui.theme.proximaNova
@@ -23,20 +23,28 @@ fun CrewItem(
     crewItemViewState: CrewItemViewState,
     modifier: Modifier = Modifier,
 ) {
-    Text(
-        buildAnnotatedString {
-            withStyle(style = SpanStyle(fontWeight = FontWeight.W800)) {
-                append(crewItemViewState.name)
-            }
-            append("\n${crewItemViewState.profession}")
-        },
-        color = Color.Black,
-        modifier = modifier,
-        fontSize = 14.sp,
-        fontWeight = FontWeight.W400,
-        fontFamily = proximaNova,
-        lineHeight = 20.sp,
-    )
+    Column(
+        modifier = modifier
+    ) {
+        Text(
+            text = crewItemViewState.name,
+            color = Color.Black,
+            modifier = Modifier,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.W800,
+            fontFamily = proximaNova,
+            lineHeight = 10.sp,
+        )
+        Text(
+            text = crewItemViewState.profession,
+            color = Color.Black,
+            modifier = Modifier,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.W400,
+            fontFamily = proximaNova,
+            lineHeight = 10.sp,
+        )
+    }
 }
 
 @Preview
@@ -50,5 +58,6 @@ private fun CrewItemPreview() {
             crewman.job,
         ),
         modifier = Modifier
+            .border(1.dp, Color.Black)
     )
 }
