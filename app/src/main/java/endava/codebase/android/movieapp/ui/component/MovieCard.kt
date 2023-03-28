@@ -3,7 +3,6 @@ package endava.codebase.android.movieapp.ui.component
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -39,7 +38,6 @@ fun MovieCard(
             .wrapContentSize(),
         shape = Shapes.medium,
         elevation = 4.dp,
-
     ) {
         Box(
             modifier = Modifier,
@@ -47,10 +45,10 @@ fun MovieCard(
             AsyncImage(
                 model = movieCardViewState.imageUrl,
                 contentDescription = movieCardViewState.title,
-                modifier = Modifier
-                    .fillMaxHeight(),
                 contentScale = ContentScale.Crop,
                 alignment = Alignment.Center,
+                modifier = Modifier
+                    .fillMaxHeight(),
             )
             FavouriteButton(
                 isFavourite = movieCardViewState.isFavorite,
@@ -74,11 +72,11 @@ fun MovieCardPreview() {
             imageUrl = movie.imageUrl.toString(),
             isFavorite = isFavourite.value,
         ),
+        onClick = { },
+        onFavouriteChange = { isFavourite.value = !isFavourite.value },
         modifier = Modifier
             .height(450.dp)
             .width(300.dp)
             .padding(MaterialTheme.spacing.small),
-        onFavouriteChange = { isFavourite.value = !isFavourite.value },
-        onClick = {  }
     )
 }

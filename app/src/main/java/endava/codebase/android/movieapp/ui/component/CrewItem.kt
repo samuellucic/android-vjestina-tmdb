@@ -29,20 +29,20 @@ fun CrewItem(
         Text(
             text = crewItemViewState.name,
             color = Color.Black,
-            modifier = Modifier,
             fontSize = 14.sp,
             fontWeight = FontWeight.W800,
             fontFamily = proximaNova,
             lineHeight = 10.sp,
+            modifier = Modifier,
         )
         Text(
             text = crewItemViewState.profession,
             color = Color.Black,
-            modifier = Modifier,
             fontSize = 14.sp,
             fontWeight = FontWeight.W400,
             fontFamily = proximaNova,
             lineHeight = 10.sp,
+            modifier = Modifier,
         )
     }
 }

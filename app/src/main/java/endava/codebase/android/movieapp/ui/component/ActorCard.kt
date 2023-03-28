@@ -33,15 +33,15 @@ fun ActorCard(
     modifier: Modifier = Modifier,
 ) {
     Card(
-        modifier = modifier
-            .wrapContentSize(),
         shape = MaterialTheme.shapes.medium,
         elevation = 4.dp,
+        modifier = modifier
+            .wrapContentSize(),
     ) {
         Column(
-            modifier = Modifier,
             verticalArrangement = Arrangement.SpaceAround,
-            horizontalAlignment = Alignment.Start
+            horizontalAlignment = Alignment.Start,
+            modifier = Modifier,
         ) {
             AsyncImage(
                 model = actorCardViewState.imageUrl,
@@ -49,11 +49,16 @@ fun ActorCard(
                 contentScale = ContentScale.Crop,
                 alignment = Alignment.Center,
                 modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight(),
+                    .weight(1f),
             )
             Text(
                 text = actorCardViewState.name,
+                color = Color.Black,
+                fontStyle = FontStyle.Normal,
+                fontWeight = FontWeight.W800,
+                fontFamily = proximaNova,
+                fontSize = 14.sp,
+                lineHeight = 15.sp,
                 modifier = Modifier
                     .padding(
                         MaterialTheme.spacing.small,
@@ -61,16 +66,15 @@ fun ActorCard(
                         MaterialTheme.spacing.large,
                         MaterialTheme.spacing.small
                     )
-                    .wrapContentHeight(),
-                color = Color.Black,
-                fontStyle = FontStyle.Normal,
-                fontWeight = FontWeight.W800,
-                fontFamily = proximaNova,
-                fontSize = 14.sp,
-                lineHeight = 15.sp,
             )
             Text(
                 text = actorCardViewState.character,
+                color = Gray700,
+                fontSize = 12.sp,
+                fontStyle = FontStyle.Normal,
+                fontWeight = FontWeight.W400,
+                fontFamily = proximaNova,
+                lineHeight = 14.sp,
                 modifier = Modifier
                     .padding(
                         MaterialTheme.spacing.small,
@@ -78,13 +82,6 @@ fun ActorCard(
                         MaterialTheme.spacing.small,
                         MaterialTheme.spacing.medium
                     )
-                    .wrapContentHeight(),
-                color = Gray700,
-                fontSize = 12.sp,
-                fontStyle = FontStyle.Normal,
-                fontWeight = FontWeight.W400,
-                fontFamily = proximaNova,
-                lineHeight = 14.sp,
             )
         }
     }
@@ -103,8 +100,8 @@ private fun ActorCardPreview() {
             actor.character
         ),
         Modifier
-            .height(320.dp)
-            .width(150.dp)
+            .height(520.dp)
+            .width(250.dp)
             .padding(6.dp),
     )
 }

@@ -29,9 +29,9 @@ fun UserScoreProgressBar(
     val thickness: Dp = radius * 0.15f
 
     Box(
-        modifier
+        contentAlignment = Alignment.Center,
+        modifier = modifier
             .size(size),
-        contentAlignment = Alignment.Center
     ) {
         Canvas(
             modifier = modifier.size(size),
