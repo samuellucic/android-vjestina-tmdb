@@ -1,7 +1,9 @@
 package endava.codebase.android.movieapp.ui.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -9,16 +11,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import endava.codebase.android.movieapp.mock.MoviesMock
+import endava.codebase.android.movieapp.ui.theme.Blue
+import endava.codebase.android.movieapp.ui.theme.MovieAppTheme
 import endava.codebase.android.movieapp.ui.theme.Shapes
 import endava.codebase.android.movieapp.ui.theme.spacing
 
 data class MovieCardViewState(
-    val title: String,
     val imageUrl: String,
     val isFavorite: Boolean,
 )
@@ -26,7 +30,7 @@ data class MovieCardViewState(
 @Composable
 fun MovieCard(
     movieCardViewState: MovieCardViewState,
-    onFavouriteChange: () -> Unit,
+    onFavoriteChange: () -> Unit,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -36,7 +40,7 @@ fun MovieCard(
                 onClick = onClick
             )
             .wrapContentSize(),
-        shape = Shapes.medium,
+        shape = MaterialTheme.shapes.medium,
         elevation = 4.dp,
     ) {
         Box(
@@ -44,17 +48,18 @@ fun MovieCard(
         ) {
             AsyncImage(
                 model = movieCardViewState.imageUrl,
-                contentDescription = movieCardViewState.title,
+                contentDescription = "Movie title",
                 contentScale = ContentScale.Crop,
                 alignment = Alignment.Center,
                 modifier = Modifier
                     .fillMaxHeight(),
             )
-            FavouriteButton(
-                isFavourite = movieCardViewState.isFavorite,
-                onFavouriteChange = onFavouriteChange,
+            FavoriteButton(
+                isFavorite = movieCardViewState.isFavorite,
+                onFavoriteChange = onFavoriteChange,
                 modifier = Modifier
                     .align(Alignment.TopStart)
+                    .padding(MaterialTheme.spacing.small),
             )
         }
     }
@@ -63,20 +68,21 @@ fun MovieCard(
 @Preview
 @Composable
 fun MovieCardPreview() {
-    val isFavourite = remember { mutableStateOf(false) }
+    val isFavorite = remember { mutableStateOf(false) }
 
     val movie = MoviesMock.getMoviesList()[0]
-    MovieCard(
-        movieCardViewState = MovieCardViewState(
-            title = movie.title,
-            imageUrl = movie.imageUrl.toString(),
-            isFavorite = isFavourite.value,
-        ),
-        onClick = { },
-        onFavouriteChange = { isFavourite.value = !isFavourite.value },
-        modifier = Modifier
-            .height(450.dp)
-            .width(300.dp)
-            .padding(MaterialTheme.spacing.small),
-    )
+    MovieAppTheme {
+        MovieCard(
+            movieCardViewState = MovieCardViewState(
+                imageUrl = movie.imageUrl.toString(),
+                isFavorite = isFavorite.value,
+            ),
+            onClick = { },
+            onFavoriteChange = { isFavorite.value = !isFavorite.value },
+            modifier = Modifier
+                .height(450.dp)
+                .width(300.dp)
+                .padding(MaterialTheme.spacing.small),
+        )
+    }
 }

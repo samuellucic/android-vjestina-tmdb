@@ -12,6 +12,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -59,8 +60,9 @@ fun UserScoreProgressBar(
         }
         Text(
             text = String.format("%.1f", progress * 10),
-            color = Color.Black,
+            color = Color.White,
             fontFamily = proximaNova,
+            fontWeight = FontWeight.W700,
             fontSize = 16.sp,
             lineHeight = 19.sp
         )

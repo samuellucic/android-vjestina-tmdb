@@ -9,6 +9,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
@@ -20,40 +21,39 @@ import endava.codebase.android.movieapp.ui.theme.Blue
 import endava.codebase.android.movieapp.ui.theme.spacing
 
 @Composable
-fun FavouriteButton(
-    isFavourite: Boolean,
-    onFavouriteChange: () -> Unit,
+fun FavoriteButton(
+    isFavorite: Boolean,
+    onFavoriteChange: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Icon(
         tint = Color.White,
-        imageVector = if (isFavourite) {
+        imageVector = if (isFavorite) {
             ImageVector.vectorResource(id = R.drawable.heart_full)
         } else {
             ImageVector.vectorResource(id = R.drawable.heart_blank)
         },
-        contentDescription = "Favourite movie",
+        contentDescription = "Favorite movie",
         modifier = modifier
+            .background(
+                color = Blue.copy(alpha = 0.4f),
+                shape = CircleShape
+            )
+            .padding(MaterialTheme.spacing.small)
             .clickable(
-                onClick = onFavouriteChange,
+                onClick = onFavoriteChange,
             )
     )
 }
 
 @Preview
 @Composable
-fun FavouriteButtonPreview() {
-    val isFavourite = remember { mutableStateOf(false) }
+fun FavoriteButtonPreview() {
+    val isFavorite = remember { mutableStateOf(false) }
 
-    FavouriteButton(
-        isFavourite = isFavourite.value,
-        onFavouriteChange = { isFavourite.value = !isFavourite.value },
-        modifier = Modifier
-            .alpha(0.4f)
-            .background(
-                color = Blue,
-                shape = CircleShape
-            )
-            .padding(MaterialTheme.spacing.small),
+    FavoriteButton(
+        isFavorite = isFavorite.value,
+        onFavoriteChange = { isFavorite.value = !isFavorite.value },
+        modifier = Modifier,
     )
 }
