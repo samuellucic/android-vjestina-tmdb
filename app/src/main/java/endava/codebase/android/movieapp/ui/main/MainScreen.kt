@@ -21,8 +21,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawWithCache
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -54,8 +52,8 @@ fun MainScreen() {
     val showBackIcon = !showBottomBar
 
     val onNavigateToMovieDetails = { movieId: Int ->
-        showBottomBar = false;
         navController.navigate(MovieDetailsDestination.createNavigationRoute(movieId))
+        showBottomBar = false
     }
 
     Scaffold(
@@ -64,15 +62,8 @@ fun MainScreen() {
                 navigationIcon = {
                     if (showBackIcon) BackIcon(
                         onBackClick = {
-                            val startDestinationId: Int =
-                                navController.graph.findStartDestination().id
-                            navController.popBackStack(
-                                destinationId = startDestinationId,
-                                inclusive = false,
-                            )
-                            if (navController.currentDestination?.id == startDestinationId) {
-                                showBottomBar = true
-                            }
+                            navController.popBackStack()
+                            showBottomBar = true
                         },
                         modifier = Modifier
                             .padding(MaterialTheme.spacing.small)
@@ -149,7 +140,6 @@ private fun TopBar(
             imageVector = ImageVector.vectorResource(id = R.drawable.tmdb_logo),
             contentDescription = null,
             modifier = Modifier
-
                 .align(Alignment.Center),
         )
     }
@@ -169,7 +159,6 @@ private fun BackIcon(
                 onClick = onBackClick
             ),
     )
-
 }
 
 @Composable

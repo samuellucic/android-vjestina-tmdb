@@ -13,6 +13,8 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -50,9 +52,7 @@ private val movieDetailsMapper: MovieDetailsMapper = MovieDetailsMapperImpl()
 val movieDetailsViewState = movieDetailsMapper.toMovieDetailsViewState(MoviesMock.getMovieDetails())
 
 @Composable
-fun MovieDetailsRoute(
-
-) {
+fun MovieDetailsRoute() {
     val mutableMovieDetailsViewState by remember { mutableStateOf(movieDetailsViewState) }
 
     MovieDetailsScreen(
@@ -67,7 +67,11 @@ fun MovieDetailsScreen(
     modifier: Modifier = Modifier,
 ) {
     Column(
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.medium),
         modifier = modifier
+            .verticalScroll(
+                state = rememberScrollState(),
+            )
     ) {
         MovieScreen(
             movieDetailsViewState = movieDetailsViewState,
@@ -75,20 +79,8 @@ fun MovieDetailsScreen(
             modifier = Modifier
                 .height(300.dp),
         )
-        Text(
-            text = "Overview",
-            color = Blue,
-            fontFamily = proximaNova,
-            fontWeight = FontWeight.W800,
-            fontSize = 20.sp,
-            lineHeight = 28.sp,
-            modifier = Modifier
-                .padding(
-                    start = MaterialTheme.spacing.medium,
-                )
-        )
-        Text(
-            text = movieDetailsViewState.overview,
+        OverviewScreen(
+            overview = movieDetailsViewState.overview,
             modifier = Modifier
                 .padding(
                     horizontal = MaterialTheme.spacing.medium
@@ -96,25 +88,18 @@ fun MovieDetailsScreen(
         )
         CrewScreen(
             crew = movieDetailsViewState.crew,
-            modifier = Modifier,
-        )
-        Text(
-            text = "Top Billed Cast",
-            color = Blue,
-            fontFamily = proximaNova,
-            fontWeight = FontWeight.W800,
-            fontSize = 20.sp,
-            lineHeight = 28.sp,
             modifier = Modifier
+                .height(80.dp)
                 .padding(
-                    start = MaterialTheme.spacing.medium,
+                    horizontal = MaterialTheme.spacing.medium
                 )
         )
         CastScreen(
             cast = movieDetailsViewState.cast,
             modifier = Modifier
                 .padding(
-                    start = MaterialTheme.spacing.medium
+                    start = MaterialTheme.spacing.small,
+                    bottom = MaterialTheme.spacing.small
                 )
                 .height(259.dp)
         )
@@ -139,11 +124,17 @@ fun MovieScreen(
                 .background(
                     brush = Brush.linearGradient(
                         colorStops = arrayOf(
-                            0.0f to Color.Black,
+                            0.5f to Color.Black,
                             1.0f to Color.Black,
                         ),
-//                        start = Offset(x = 0.75f, y = 0.5f),
-//                        end = Offset(x = 0.25f, y = 0.5f),
+                        start = Offset(
+                            x = 90.75f,
+                            y = 151.5f,
+                        ),
+                        end = Offset(
+                            x = 272.25f,
+                            y = 151.5f,
+                        )
                     )
                 )
                 .fillMaxHeight(),
@@ -193,13 +184,38 @@ fun MovieScreen(
 }
 
 @Composable
+fun OverviewScreen(
+    overview: String,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier,
+    ) {
+        Text(
+            text = "Overview",
+            color = Blue,
+            fontFamily = proximaNova,
+            fontWeight = FontWeight.W800,
+            fontSize = 20.sp,
+            lineHeight = 28.sp,
+            modifier = Modifier
+        )
+        Text(
+            text = overview,
+            modifier = Modifier
+        )
+    }
+}
+
+@Composable
 fun CrewScreen(
     crew: List<CrewmanViewState>,
     modifier: Modifier = Modifier,
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(count = 3),
-        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
+        modifier = modifier
     ) {
         items(
             items = crew,
@@ -213,10 +229,6 @@ fun CrewScreen(
                     job = crewman.job,
                 ),
                 modifier = Modifier
-                    .padding(
-                        horizontal = MaterialTheme.spacing.medium,
-                        vertical = MaterialTheme.spacing.mediumSmall,
-                    ),
             )
         }
     }
@@ -227,26 +239,43 @@ fun CastScreen(
     cast: List<ActorViewState>,
     modifier: Modifier = Modifier,
 ) {
-    LazyHorizontalGrid(
-        rows = GridCells.Fixed(count = 1),
+    Column(
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.extraSmall),
         modifier = modifier,
     ) {
-        items(
-            items = cast,
-            key = { actor ->
-                actor.id
-            },
-        ) { actor ->
-            ActorCard(
-                actorCardViewState = ActorCardViewState(
-                    imageUrl = actor.imageUrl,
-                    name = actor.name,
-                    character = actor.character,
-                ),
-                modifier = Modifier
-                    .width(160.dp)
-                    .padding(all = MaterialTheme.spacing.small),
-            )
+        Text(
+            text = "Top Billed Cast",
+            color = Blue,
+            fontFamily = proximaNova,
+            fontWeight = FontWeight.W800,
+            fontSize = 20.sp,
+            lineHeight = 28.sp,
+            modifier = Modifier
+                .padding(
+                    start = MaterialTheme.spacing.small
+                )
+        )
+        LazyHorizontalGrid(
+            rows = GridCells.Fixed(count = 1),
+            modifier = Modifier
+        ) {
+            items(
+                items = cast,
+                key = { actor ->
+                    actor.id
+                },
+            ) { actor ->
+                ActorCard(
+                    actorCardViewState = ActorCardViewState(
+                        imageUrl = actor.imageUrl,
+                        name = actor.name,
+                        character = actor.character,
+                    ),
+                    modifier = Modifier
+                        .width(160.dp)
+                        .padding(horizontal = MaterialTheme.spacing.small),
+                )
+            }
         }
     }
 }

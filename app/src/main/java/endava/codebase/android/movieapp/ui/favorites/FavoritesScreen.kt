@@ -1,15 +1,15 @@
 package endava.codebase.android.movieapp.ui.favorites
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -17,7 +17,6 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -65,6 +64,10 @@ fun FavoritesScreen(
     Column(
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.medium),
         modifier = modifier
+            .fillMaxHeight()
+            .verticalScroll(
+                state = rememberScrollState(),
+            )
             .padding(
                 vertical = MaterialTheme.spacing.medium
             ),
@@ -86,7 +89,7 @@ fun FavoritesScreen(
             verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.large),
             columns = GridCells.Adaptive(minSize = 130.dp),
             modifier = Modifier
-                .fillMaxHeight()
+                .weight(1f)
         ) {
             items(
                 items = favoritesViewState.value.favoriteMovies,
