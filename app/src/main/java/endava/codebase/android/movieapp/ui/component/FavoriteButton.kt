@@ -33,14 +33,15 @@ fun FavoriteButton(
         },
         contentDescription = "Favorite movie",
         modifier = modifier
+            .alpha(0.4f)
             .background(
-                color = Blue.copy(alpha = 0.4f),
+                color = Blue,
                 shape = CircleShape
             )
             .padding(MaterialTheme.spacing.small)
             .clickable(
                 onClick = onFavoriteChange,
-            )
+            ),
     )
 }
 
@@ -52,6 +53,6 @@ fun FavoriteButtonPreview() {
     FavoriteButton(
         isFavorite = isFavorite.value,
         onFavoriteChange = { isFavorite.value = !isFavorite.value },
-        modifier = Modifier,
+        modifier = Modifier
     )
 }
