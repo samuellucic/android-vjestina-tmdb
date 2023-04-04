@@ -20,40 +20,40 @@ import endava.codebase.android.movieapp.ui.theme.Blue
 import endava.codebase.android.movieapp.ui.theme.spacing
 
 @Composable
-fun FavouriteButton(
-    isFavourite: Boolean,
-    onFavouriteChange: () -> Unit,
+fun FavoriteButton(
+    isFavorite: Boolean,
+    onFavoriteChange: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Icon(
         tint = Color.White,
-        imageVector = if (isFavourite) {
+        imageVector = if (isFavorite) {
             ImageVector.vectorResource(id = R.drawable.heart_full)
         } else {
             ImageVector.vectorResource(id = R.drawable.heart_blank)
         },
-        contentDescription = "Favourite movie",
+        contentDescription = "Favorite movie",
         modifier = modifier
-            .clickable(
-                onClick = onFavouriteChange,
-            )
-    )
-}
-
-@Preview
-@Composable
-fun FavouriteButtonPreview() {
-    val isFavourite = remember { mutableStateOf(false) }
-
-    FavouriteButton(
-        isFavourite = isFavourite.value,
-        onFavouriteChange = { isFavourite.value = !isFavourite.value },
-        modifier = Modifier
             .alpha(0.4f)
             .background(
                 color = Blue,
                 shape = CircleShape
             )
-            .padding(MaterialTheme.spacing.small),
+            .padding(MaterialTheme.spacing.small)
+            .clickable(
+                onClick = onFavoriteChange,
+            ),
+    )
+}
+
+@Preview
+@Composable
+fun FavoriteButtonPreview() {
+    val isFavorite = remember { mutableStateOf(false) }
+
+    FavoriteButton(
+        isFavorite = isFavorite.value,
+        onFavoriteChange = { isFavorite.value = !isFavorite.value },
+        modifier = Modifier
     )
 }

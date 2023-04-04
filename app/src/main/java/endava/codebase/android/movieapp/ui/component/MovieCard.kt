@@ -26,7 +26,7 @@ data class MovieCardViewState(
 @Composable
 fun MovieCard(
     movieCardViewState: MovieCardViewState,
-    onFavouriteChange: () -> Unit,
+    onFavoriteChange: () -> Unit,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -50,9 +50,9 @@ fun MovieCard(
                 modifier = Modifier
                     .fillMaxHeight(),
             )
-            FavouriteButton(
-                isFavourite = movieCardViewState.isFavorite,
-                onFavouriteChange = onFavouriteChange,
+            FavoriteButton(
+                isFavorite = movieCardViewState.isFavorite,
+                onFavoriteChange = onFavoriteChange,
                 modifier = Modifier
                     .align(Alignment.TopStart)
             )
@@ -63,17 +63,17 @@ fun MovieCard(
 @Preview
 @Composable
 fun MovieCardPreview() {
-    val isFavourite = remember { mutableStateOf(false) }
+    val isFavorite = remember { mutableStateOf(false) }
 
     val movie = MoviesMock.getMoviesList()[0]
     MovieCard(
         movieCardViewState = MovieCardViewState(
             title = movie.title,
             imageUrl = movie.imageUrl.toString(),
-            isFavorite = isFavourite.value,
+            isFavorite = isFavorite.value,
         ),
         onClick = { },
-        onFavouriteChange = { isFavourite.value = !isFavourite.value },
+        onFavoriteChange = { isFavorite.value = !isFavorite.value },
         modifier = Modifier
             .height(450.dp)
             .width(300.dp)
