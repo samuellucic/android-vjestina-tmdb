@@ -7,6 +7,29 @@ import endava.codebase.android.movieapp.ui.moviedetails.MovieDetailsViewState
 
 class MovieDetailsMapperImpl : MovieDetailsMapper {
     override fun toMovieDetailsViewState(movieDetails: MovieDetails): MovieDetailsViewState {
+        val crew = ArrayList<CrewmanViewState>()
+        val cast = ArrayList<ActorViewState>()
+
+        movieDetails.crew.forEach { crewman ->
+            crew.add(
+                CrewmanViewState(
+                    id = crewman.id,
+                    name = crewman.name,
+                    job = crewman.job,
+                )
+            )
+        }
+        movieDetails.cast.forEach { actor ->
+            cast.add(
+                ActorViewState(
+                    id = actor.id,
+                    imageUrl = actor.imageUrl.toString(),
+                    name = actor.name,
+                    character = actor.character,
+                )
+            )
+        }
+
         return MovieDetailsViewState(
             id = movieDetails.movie.id,
             imageUrl = movieDetails.movie.imageUrl.toString(),
@@ -14,25 +37,8 @@ class MovieDetailsMapperImpl : MovieDetailsMapper {
             title = movieDetails.movie.title,
             overview = movieDetails.movie.overview,
             isFavorite = movieDetails.movie.isFavorite,
-            crew = movieDetails.crew.asSequence()
-                .map { crewman ->
-                    CrewmanViewState(
-                        id = crewman.id,
-                        name = crewman.name,
-                        job = crewman.job,
-                    )
-                }
-                .toList(),
-            cast = movieDetails.cast.asSequence()
-                .map { actor ->
-                    ActorViewState(
-                        id = actor.id,
-                        imageUrl = actor.imageUrl.toString(),
-                        name = actor.name,
-                        character = actor.character,
-                    )
-                }
-                .toList(),
+            crew = crew,
+            cast = cast,
         )
     }
 }

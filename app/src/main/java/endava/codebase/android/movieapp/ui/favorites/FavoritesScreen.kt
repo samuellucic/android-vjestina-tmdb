@@ -1,15 +1,12 @@
 package endava.codebase.android.movieapp.ui.favorites
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -17,11 +14,13 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import endava.codebase.android.movieapp.R
 import endava.codebase.android.movieapp.mock.MoviesMock
 import endava.codebase.android.movieapp.ui.component.MovieCard
 import endava.codebase.android.movieapp.ui.favorites.mapper.FavoritesMapper
@@ -61,53 +60,49 @@ fun FavoritesScreen(
     onClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(
+    LazyVerticalGrid(
+        columns = GridCells.Adaptive(minSize = dimensionResource(id = R.dimen.favorites_screen_column_width)),
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.medium),
         modifier = modifier
-            .fillMaxHeight()
-            .verticalScroll(
-                state = rememberScrollState(),
-            )
             .padding(
                 vertical = MaterialTheme.spacing.medium
             ),
     ) {
-        Text(
-            text = "Favorites",
-            color = Blue,
-            fontFamily = proximaNova,
-            fontWeight = FontWeight.W800,
-            fontSize = 20.sp,
-            lineHeight = 28.sp,
-            textAlign = TextAlign.Justify,
-            modifier = Modifier
-                .padding(
-                    start = MaterialTheme.spacing.small,
-                )
-        )
-        LazyVerticalGrid(
-            verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.large),
-            columns = GridCells.Adaptive(minSize = 130.dp),
-            modifier = Modifier
-                .weight(1f)
-        ) {
-            items(
-                items = favoritesViewState.value.favoriteMovies,
-                key = { favoriteMovie ->
-                    favoriteMovie.id
-                },
-            ) { favoriteMovie ->
-                MovieCard(
-                    movieCardViewState = favoriteMovie.movieCardViewState,
-                    onFavoriteChange = onFavoriteChange,
-                    onClick = { onClick(favoriteMovie.id) },
-                    modifier = Modifier
-                        .height(220.dp)
-                        .padding(
-                            horizontal = MaterialTheme.spacing.small,
-                        ),
-                )
+        item(
+            span = {
+                GridItemSpan(Int.MAX_VALUE)
             }
+        ) {
+            Text(
+                text = stringResource(id = R.string.favorites_title),
+                color = Blue,
+                fontFamily = proximaNova,
+                fontWeight = FontWeight.W800,
+                fontSize = 20.sp,
+                lineHeight = 28.sp,
+                textAlign = TextAlign.Justify,
+                modifier = Modifier
+                    .padding(
+                        start = MaterialTheme.spacing.small,
+                    )
+            )
+        }
+        items(
+            items = favoritesViewState.value.favoriteMovies,
+            key = { favoriteMovie ->
+                favoriteMovie.id
+            },
+        ) { favoriteMovie ->
+            MovieCard(
+                movieCardViewState = favoriteMovie.movieCardViewState,
+                onFavoriteChange = onFavoriteChange,
+                onClick = { onClick(favoriteMovie.id) },
+                modifier = Modifier
+                    .height(dimensionResource(id = R.dimen.movie_card_height))
+                    .padding(
+                        horizontal = MaterialTheme.spacing.small,
+                    ),
+            )
         }
     }
 }

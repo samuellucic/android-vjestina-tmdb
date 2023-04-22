@@ -7,20 +7,21 @@ import endava.codebase.android.movieapp.ui.favorites.FavoritesViewState
 
 class FavoritesMapperImpl : FavoritesMapper {
     override fun toFavoritesViewState(favoriteMovies: List<Movie>): FavoritesViewState {
-        return FavoritesViewState(
-            favoriteMovies = favoriteMovies
-                .asSequence()
-                .map { favoriteMovie ->
-                    FavoritesMovieViewState(
-                        id = favoriteMovie.id,
-                        movieCardViewState = MovieCardViewState(
-                            favoriteMovie.imageUrl.toString(),
-                            favoriteMovie.isFavorite,
-                        ),
-                    )
-                }
-                .toList()
-        )
+        val favoriteMovieViewStates = ArrayList<FavoritesMovieViewState>();
+
+        favoriteMovies.forEach { favoriteMovie ->
+            favoriteMovieViewStates.add(
+                FavoritesMovieViewState(
+                    id = favoriteMovie.id,
+                    movieCardViewState = MovieCardViewState(
+                        favoriteMovie.imageUrl.toString(),
+                        favoriteMovie.isFavorite,
+                    ),
+                )
+            )
+        }
+
+        return FavoritesViewState(favoriteMovieViewStates)
     }
 
 }

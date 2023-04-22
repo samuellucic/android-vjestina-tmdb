@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="user_score_size">42</dimen>
+    <dimen name="crew_screen_height">80</dimen>
+    <dimen name="cast_screen_height">259</dimen>
+    <dimen name="movie_screen_height">300</dimen>
+    <dimen name="top_bar_height">80</dimen>
+    <dimen name="favorites_screen_column_width">130</dimen>
+    <dimen name="movie_card_height">220</dimen>
+</resources>

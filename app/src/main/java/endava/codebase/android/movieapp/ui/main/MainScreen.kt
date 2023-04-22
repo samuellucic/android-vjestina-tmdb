@@ -23,9 +23,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavType
@@ -49,11 +49,11 @@ fun MainScreen() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     var showBottomBar by remember { mutableStateOf(true) }
+    showBottomBar = navBackStackEntry?.destination?.route == NavigationItem.HomeDestination.route
     val showBackIcon = !showBottomBar
 
     val onNavigateToMovieDetails = { movieId: Int ->
         navController.navigate(MovieDetailsDestination.createNavigationRoute(movieId))
-        showBottomBar = false
     }
 
     Scaffold(
@@ -63,7 +63,6 @@ fun MainScreen() {
                     if (showBackIcon) BackIcon(
                         onBackClick = {
                             navController.popBackStack()
-                            showBottomBar = true
                         },
                         modifier = Modifier
                             .padding(MaterialTheme.spacing.small)
@@ -131,7 +130,7 @@ private fun TopBar(
             .background(
                 color = Blue
             )
-            .height(80.dp)
+            .height(dimensionResource(id = R.dimen.top_bar_height))
             .fillMaxWidth(),
     ) {
         navigationIcon?.invoke()

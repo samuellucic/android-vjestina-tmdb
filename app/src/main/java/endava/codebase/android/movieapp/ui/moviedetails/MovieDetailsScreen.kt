@@ -4,15 +4,17 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
@@ -27,11 +29,14 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import endava.codebase.android.movieapp.R
 import endava.codebase.android.movieapp.mock.MoviesMock
 import endava.codebase.android.movieapp.ui.component.ActorCard
 import endava.codebase.android.movieapp.ui.component.ActorCardViewState
@@ -46,6 +51,11 @@ import endava.codebase.android.movieapp.ui.theme.Gray300
 import endava.codebase.android.movieapp.ui.theme.MovieAppTheme
 import endava.codebase.android.movieapp.ui.theme.proximaNova
 import endava.codebase.android.movieapp.ui.theme.spacing
+
+private const val OVERLAY_START_X = 90.75f
+private const val OVERLAY_START_Y = 151.5f
+private const val OVERLAY_END_X = 272.25f
+private const val OVERLAY_END_Y = 151.5f
 
 private val movieDetailsMapper: MovieDetailsMapper = MovieDetailsMapperImpl()
 
@@ -77,7 +87,7 @@ fun MovieDetailsScreen(
             movieDetailsViewState = movieDetailsViewState,
             onFavoriteChange = {},
             modifier = Modifier
-                .height(300.dp),
+                .height(dimensionResource(id = R.dimen.movie_screen_height)),
         )
         OverviewScreen(
             overview = movieDetailsViewState.overview,
@@ -89,7 +99,7 @@ fun MovieDetailsScreen(
         CrewScreen(
             crew = movieDetailsViewState.crew,
             modifier = Modifier
-                .height(80.dp)
+                .height(dimensionResource(id = R.dimen.crew_screen_height))
                 .padding(
                     horizontal = MaterialTheme.spacing.medium
                 )
@@ -101,7 +111,7 @@ fun MovieDetailsScreen(
                     start = MaterialTheme.spacing.small,
                     bottom = MaterialTheme.spacing.small
                 )
-                .height(259.dp)
+                .height(dimensionResource(id = R.dimen.cast_screen_height))
         )
     }
 }
@@ -117,7 +127,7 @@ fun MovieScreen(
     ) {
         AsyncImage(
             model = movieDetailsViewState.imageUrl,
-            contentDescription = "Movie",
+            contentDescription = null,
             contentScale = ContentScale.Crop,
             alignment = Alignment.Center,
             modifier = Modifier
@@ -128,12 +138,12 @@ fun MovieScreen(
                             1.0f to Color.Black,
                         ),
                         start = Offset(
-                            x = 90.75f,
-                            y = 151.5f,
+                            x = OVERLAY_START_X,
+                            y = OVERLAY_START_Y,
                         ),
                         end = Offset(
-                            x = 272.25f,
-                            y = 151.5f,
+                            x = OVERLAY_END_X,
+                            y = OVERLAY_END_Y,
                         )
                     )
                 )
@@ -154,11 +164,11 @@ fun MovieScreen(
             ) {
                 UserScoreProgressBar(
                     progress = movieDetailsViewState.voteAverage,
-                    size = 42.dp,
+                    size = dimensionResource(id = R.dimen.user_score_size),
                     modifier = Modifier,
                 )
                 Text(
-                    text = "User score",
+                    text = stringResource(id = R.string.user_score),
                     color = Color.White,
                     fontFamily = proximaNova,
                     fontWeight = FontWeight.W700,
@@ -192,7 +202,7 @@ fun OverviewScreen(
         modifier = modifier,
     ) {
         Text(
-            text = "Overview",
+            text = stringResource(id = R.string.overview_title),
             color = Blue,
             fontFamily = proximaNova,
             fontWeight = FontWeight.W800,
@@ -244,7 +254,7 @@ fun CastScreen(
         modifier = modifier,
     ) {
         Text(
-            text = "Top Billed Cast",
+            text = stringResource(id = R.string.top_billed_cast_title),
             color = Blue,
             fontFamily = proximaNova,
             fontWeight = FontWeight.W800,
@@ -255,9 +265,10 @@ fun CastScreen(
                     start = MaterialTheme.spacing.small
                 )
         )
-        LazyHorizontalGrid(
-            rows = GridCells.Fixed(count = 1),
-            modifier = Modifier
+        LazyRow(
+            contentPadding = PaddingValues(all = MaterialTheme.spacing.small),
+            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
+            modifier = Modifier,
         ) {
             items(
                 items = cast,
@@ -273,7 +284,6 @@ fun CastScreen(
                     ),
                     modifier = Modifier
                         .width(160.dp)
-                        .padding(horizontal = MaterialTheme.spacing.small),
                 )
             }
         }
