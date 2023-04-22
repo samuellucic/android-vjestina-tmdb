@@ -1,6 +1,5 @@
 package endava.codebase.android.movieapp.ui.home.mapper
 
-import android.content.res.Resources
 import endava.codebase.android.movieapp.R
 import endava.codebase.android.movieapp.model.Movie
 import endava.codebase.android.movieapp.model.MovieCategory
@@ -18,7 +17,7 @@ class HomeScreenMapperImpl : HomeScreenMapper {
     ): HomeMovieCategoryViewState {
         val movieCategoryLabelViewStates = ArrayList<MovieCategoryLabelViewState>()
         val homeMovieViewStates = ArrayList<HomeMovieViewState>()
-        
+
         movieCategories.forEach { movieCategory ->
             val resId = when (movieCategory) {
                 MovieCategory.POPULAR -> R.string.popular

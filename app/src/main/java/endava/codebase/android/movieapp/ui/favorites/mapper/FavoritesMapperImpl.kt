@@ -7,7 +7,7 @@ import endava.codebase.android.movieapp.ui.favorites.FavoritesViewState
 
 class FavoritesMapperImpl : FavoritesMapper {
     override fun toFavoritesViewState(favoriteMovies: List<Movie>): FavoritesViewState {
-        val favoriteMovieViewStates = ArrayList<FavoritesMovieViewState>();
+        val favoriteMovieViewStates = ArrayList<FavoritesMovieViewState>()
 
         favoriteMovies.forEach { favoriteMovie ->
             favoriteMovieViewStates.add(
@@ -23,5 +23,4 @@ class FavoritesMapperImpl : FavoritesMapper {
 
         return FavoritesViewState(favoriteMovieViewStates)
     }
-
 }

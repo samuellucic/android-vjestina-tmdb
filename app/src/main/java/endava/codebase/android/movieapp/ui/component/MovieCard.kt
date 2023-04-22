@@ -19,7 +19,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import endava.codebase.android.movieapp.mock.MoviesMock
-import endava.codebase.android.movieapp.ui.theme.MovieAppTheme
 import endava.codebase.android.movieapp.ui.theme.spacing
 
 data class MovieCardViewState(
