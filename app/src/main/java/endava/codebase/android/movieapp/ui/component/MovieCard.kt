@@ -71,18 +71,17 @@ fun MovieCardPreview() {
     val isFavorite = remember { mutableStateOf(false) }
 
     val movie = MoviesMock.getMoviesList()[0]
-    MovieAppTheme {
-        MovieCard(
-            movieCardViewState = MovieCardViewState(
-                imageUrl = movie.imageUrl.toString(),
-                isFavorite = isFavorite.value,
-            ),
-            onClick = { },
-            onFavoriteChange = { isFavorite.value = !isFavorite.value },
-            modifier = Modifier
-                .height(450.dp)
-                .width(300.dp)
-                .padding(MaterialTheme.spacing.small),
-        )
-    }
+    MovieCard(
+        movieCardViewState = MovieCardViewState(
+            title = movie.title,
+            imageUrl = movie.imageUrl.toString(),
+            isFavorite = isFavorite.value,
+        ),
+        onClick = { },
+        onFavoriteChange = { isFavorite.value = !isFavorite.value },
+        modifier = Modifier
+            .height(450.dp)
+            .width(300.dp)
+            .padding(MaterialTheme.spacing.small),
+    )
 }
