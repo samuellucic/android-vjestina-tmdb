@@ -47,7 +47,7 @@ fun MovieCard(
         ) {
             AsyncImage(
                 model = movieCardViewState.imageUrl,
-                contentDescription = "Movie title",
+                contentDescription = null,
                 contentScale = ContentScale.Crop,
                 alignment = Alignment.Center,
                 modifier = Modifier
