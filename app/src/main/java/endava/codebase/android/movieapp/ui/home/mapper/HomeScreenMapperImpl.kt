@@ -15,26 +15,21 @@ class HomeScreenMapperImpl : HomeScreenMapper {
         selectedMovieCategory: MovieCategory,
         movies: List<Movie>
     ): HomeMovieCategoryViewState {
-        val movieCategoryLabelViewStates = ArrayList<MovieCategoryLabelViewState>()
-        val homeMovieViewStates = ArrayList<HomeMovieViewState>()
-
-        movieCategories.forEach { movieCategory ->
-            val resId = when (movieCategory) {
-                MovieCategory.POPULAR -> R.string.popular
-                MovieCategory.TOP_RATED -> R.string.top_rated
-                MovieCategory.NOW_PLAYING -> R.string.now_playing
-                MovieCategory.UPCOMING -> R.string.upcoming
-            }
-            movieCategoryLabelViewStates.add(
+        return HomeMovieCategoryViewState(
+            movieCategories = movieCategories.map { movieCategory ->
+                val resId = when (movieCategory) {
+                    MovieCategory.POPULAR -> R.string.popular
+                    MovieCategory.TOP_RATED -> R.string.top_rated
+                    MovieCategory.NOW_PLAYING -> R.string.now_playing
+                    MovieCategory.UPCOMING -> R.string.upcoming
+                }
                 MovieCategoryLabelViewState(
                     itemId = movieCategory.ordinal,
                     isSelected = selectedMovieCategory == movieCategory,
                     categoryText = MovieCategoryLabelTextReferenceViewState(resId),
                 )
-            )
-        }
-        movies.forEach { movie ->
-            homeMovieViewStates.add(
+            },
+            movies = movies.map { movie ->
                 HomeMovieViewState(
                     id = movie.id,
                     movieCardViewState = MovieCardViewState(
@@ -42,12 +37,7 @@ class HomeScreenMapperImpl : HomeScreenMapper {
                         isFavorite = movie.isFavorite
                     )
                 )
-            )
-        }
-
-        return HomeMovieCategoryViewState(
-            movieCategories = movieCategoryLabelViewStates,
-            movies = homeMovieViewStates,
+            },
         )
     }
 }

@@ -15,10 +15,9 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -48,8 +47,14 @@ import endava.codebase.android.movieapp.ui.theme.spacing
 fun MainScreen() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    var showBottomBar by remember { mutableStateOf(true) }
-    showBottomBar = navBackStackEntry?.destination?.route == NavigationItem.HomeDestination.route
+    val showBottomBar by remember {
+        derivedStateOf {
+            navBackStackEntry?.destination?.route in listOf(
+                NavigationItem.HomeDestination.route,
+                NavigationItem.FavoritesDestination.route,
+            )
+        }
+    }
     val showBackIcon = !showBottomBar
 
     val onNavigateToMovieDetails = { movieId: Int ->

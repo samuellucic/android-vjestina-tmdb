@@ -84,7 +84,10 @@ fun MovieDetailsScreen(
             )
     ) {
         MovieScreen(
-            movieDetailsViewState = movieDetailsViewState,
+            title = movieDetailsViewState.title,
+            imageUrl = movieDetailsViewState.imageUrl,
+            voteAverage = movieDetailsViewState.voteAverage,
+            isFavorite = movieDetailsViewState.isFavorite,
             onFavoriteChange = {},
             modifier = Modifier
                 .height(dimensionResource(id = R.dimen.movie_screen_height)),
@@ -118,7 +121,10 @@ fun MovieDetailsScreen(
 
 @Composable
 fun MovieScreen(
-    movieDetailsViewState: MovieDetailsViewState,
+    title: String,
+    imageUrl: String,
+    voteAverage: Float,
+    isFavorite: Boolean,
     onFavoriteChange: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -126,7 +132,7 @@ fun MovieScreen(
         modifier = modifier
     ) {
         AsyncImage(
-            model = movieDetailsViewState.imageUrl,
+            model = imageUrl,
             contentDescription = null,
             contentScale = ContentScale.Crop,
             alignment = Alignment.Center,
@@ -163,7 +169,7 @@ fun MovieScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 UserScoreProgressBar(
-                    progress = movieDetailsViewState.voteAverage,
+                    progress = voteAverage,
                     size = dimensionResource(id = R.dimen.user_score_size),
                     modifier = Modifier,
                 )
@@ -177,7 +183,7 @@ fun MovieScreen(
                 )
             }
             Text(
-                text = movieDetailsViewState.title,
+                text = title,
                 color = Gray300,
                 fontFamily = proximaNova,
                 fontWeight = FontWeight.W400,
@@ -185,7 +191,7 @@ fun MovieScreen(
                 lineHeight = 34.sp
             )
             FavoriteButton(
-                isFavorite = movieDetailsViewState.isFavorite,
+                isFavorite = isFavorite,
                 onFavoriteChange = onFavoriteChange,
                 modifier = Modifier
             )
