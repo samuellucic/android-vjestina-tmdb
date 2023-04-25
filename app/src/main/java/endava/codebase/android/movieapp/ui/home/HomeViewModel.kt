@@ -11,9 +11,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
-class HomeViewModel (
+class HomeViewModel(
     private val movieRepository: MovieRepository,
     val homeMapper: HomeScreenMapper,
 ) : ViewModel() {
@@ -46,34 +45,38 @@ class HomeViewModel (
         )
     }
 
-    fun changeCategory(categoryId: Int) = runBlocking {
-        val homeViewState: MutableStateFlow<HomeMovieCategoryViewState>
-        val moviesFlow: Flow<List<Movie>>
-        val movieCategories: List<MovieCategory>
-        val movieCategory = MovieCategory.values()[categoryId]
+    fun changeCategory(categoryId: Int) {
+        viewModelScope.launch {
+            val homeViewState: MutableStateFlow<HomeMovieCategoryViewState>
+            val moviesFlow: Flow<List<Movie>>
+            val movieCategories: List<MovieCategory>
+            val movieCategory = MovieCategory.values()[categoryId]
 
-        when (movieCategory) {
-            MovieCategory.POPULAR, MovieCategory.TOP_RATED -> {
-                homeViewState = _homeNewReleasesViewState
-                moviesFlow = movieRepository.trendingMovies(movieCategory)
-                movieCategories = listOf(MovieCategory.POPULAR, MovieCategory.TOP_RATED)
+            when (movieCategory) {
+                MovieCategory.POPULAR, MovieCategory.TOP_RATED -> {
+                    homeViewState = _homeTrendingViewState
+                    moviesFlow = movieRepository.trendingMovies(movieCategory)
+                    movieCategories = listOf(MovieCategory.POPULAR, MovieCategory.TOP_RATED)
+                }
+                MovieCategory.NOW_PLAYING, MovieCategory.UPCOMING -> {
+                    homeViewState = _homeNewReleasesViewState
+                    moviesFlow = movieRepository.newReleases(movieCategory)
+                    movieCategories = listOf(MovieCategory.NOW_PLAYING, MovieCategory.UPCOMING)
+                }
             }
-            MovieCategory.NOW_PLAYING, MovieCategory.UPCOMING -> {
-                homeViewState = _homeNewReleasesViewState
-                moviesFlow = movieRepository.newReleases(movieCategory)
-                movieCategories = listOf(MovieCategory.NOW_PLAYING, MovieCategory.UPCOMING)
-            }
+            generateCategory(
+                homeViewState = homeViewState,
+                moviesFlow = moviesFlow,
+                movieCategories = movieCategories,
+                movieCategory = movieCategory,
+            )
         }
-        generateCategory(
-            homeViewState = homeViewState,
-            moviesFlow = moviesFlow,
-            movieCategories = movieCategories,
-            movieCategory = movieCategory,
-        )
     }
 
-    fun toggleFavorite(movieId: Int) = runBlocking {
-        movieRepository.toggleFavorite(movieId)
+    fun toggleFavorite(movieId: Int) {
+        viewModelScope.launch {
+            movieRepository.toggleFavorite(movieId)
+        }
     }
 
     private fun generateCategory(

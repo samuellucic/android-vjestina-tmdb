@@ -200,8 +200,7 @@ private fun MovieCategoryScreen(
 @Composable
 fun HomeScreenPreview() {
     val mutableTrendingCategoryViewState by remember { mutableStateOf(trendingCategoryViewState) }
-    val mutableNewReleasesCategoryViewState by
-        remember { mutableStateOf(newReleasesCategoryViewState) }
+    val mutableNewReleasesCategoryViewState by remember { mutableStateOf(newReleasesCategoryViewState) }
 
     MovieAppTheme {
         HomeScreen(
