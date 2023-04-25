@@ -15,7 +15,7 @@ import endava.codebase.android.movieapp.ui.theme.proximaNova
 
 data class CrewItemViewState(
     val name: String,
-    val profession: String,
+    val job: String,
 )
 
 @Composable
@@ -36,7 +36,7 @@ fun CrewItem(
             modifier = Modifier,
         )
         Text(
-            text = crewItemViewState.profession,
+            text = crewItemViewState.job,
             color = Color.Black,
             fontSize = 14.sp,
             fontWeight = FontWeight.W400,

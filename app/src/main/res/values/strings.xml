@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">MovieApp</string>
+    <string name="popular">Popular</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="now_playing">Now playing</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="favorites">Favorites</string>
+    <string name="home">Home</string>
+    <string name="favorites_title">Favorites</string>
+    <string name="trending_movies_title">Trending movies</string>
+    <string name="new_releases_title">New releases</string>
+    <string name="top_billed_cast_title">Top Billed Cast</string>
+    <string name="overview_title">Overview</string>
+    <string name="user_score">User score</string>
 </resources>

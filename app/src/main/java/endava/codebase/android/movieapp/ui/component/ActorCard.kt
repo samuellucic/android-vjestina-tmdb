@@ -1,6 +1,11 @@
 package endava.codebase.android.movieapp.ui.component
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -19,7 +24,6 @@ import endava.codebase.android.movieapp.mock.MoviesMock
 import endava.codebase.android.movieapp.ui.theme.Gray700
 import endava.codebase.android.movieapp.ui.theme.proximaNova
 import endava.codebase.android.movieapp.ui.theme.spacing
-
 
 data class ActorCardViewState(
     val imageUrl: String,
@@ -63,8 +67,8 @@ fun ActorCard(
                     .padding(
                         MaterialTheme.spacing.small,
                         MaterialTheme.spacing.small,
-                        MaterialTheme.spacing.large,
-                        MaterialTheme.spacing.small
+                        MaterialTheme.spacing.small,
+                        MaterialTheme.spacing.extraSmall
                     )
             )
             Text(
@@ -78,14 +82,13 @@ fun ActorCard(
                 modifier = Modifier
                     .padding(
                         MaterialTheme.spacing.small,
-                        MaterialTheme.spacing.default,
+                        MaterialTheme.spacing.extraSmall,
                         MaterialTheme.spacing.small,
-                        MaterialTheme.spacing.medium
+                        MaterialTheme.spacing.small
                     )
             )
         }
     }
-
 }
 
 @Preview
@@ -100,8 +103,8 @@ private fun ActorCardPreview() {
             actor.character
         ),
         Modifier
-            .height(520.dp)
-            .width(250.dp)
+            .height(320.dp)
+            .width(190.dp)
             .padding(6.dp),
     )
 }
