@@ -61,13 +61,9 @@ fun HomeRoute(
         HomeScreen(
             trendingCategoryViewState = trendingCategoryViewState,
             newReleasesCategoryViewState = newReleasesCategoryViewState,
-            onFavoriteChange = { movieId ->
-                viewModel.toggleFavorite(movieId)
-            },
+            onFavoriteChange = viewModel::toggleFavorite,
             onClick = onNavigateToMovieDetails,
-            onCategoryClick = { categoryId: Int ->
-                viewModel.changeCategory(categoryId)
-            },
+            onCategoryClick = viewModel::changeCategory,
             modifier = Modifier
                 .padding(
                     top = MaterialTheme.spacing.medium,

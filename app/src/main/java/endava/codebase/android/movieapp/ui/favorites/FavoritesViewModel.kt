@@ -4,36 +4,30 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import endava.codebase.android.movieapp.data.repository.MovieRepository
 import endava.codebase.android.movieapp.ui.favorites.mapper.FavoritesMapper
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class FavoritesViewModel(
     private val movieRepository: MovieRepository,
     val favoritesMapper: FavoritesMapper,
 ) : ViewModel() {
-    init {
-        generateFavorites()
-    }
 
-    private val _favoritesViewState: MutableStateFlow<FavoritesViewState> = MutableStateFlow(
-        FavoritesViewState(listOf())
-    )
-    val favoritesViewState: StateFlow<FavoritesViewState> = _favoritesViewState.asStateFlow()
+    val favoritesViewState: StateFlow<FavoritesViewState> = movieRepository.favoriteMovies()
+        .map { movies ->
+            favoritesMapper.toFavoritesViewState(movies)
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = FavoritesViewState(listOf())
+        )
 
     fun toggleFavorite(movieId: Int) {
         viewModelScope.launch {
             movieRepository.toggleFavorite(movieId)
-        }
-    }
-
-    private fun generateFavorites() {
-        viewModelScope.launch {
-            movieRepository.favoriteMovies()
-                .collect { movies ->
-                    _favoritesViewState.value = favoritesMapper.toFavoritesViewState(movies)
-                }
         }
     }
 }

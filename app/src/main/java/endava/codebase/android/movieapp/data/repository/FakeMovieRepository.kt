@@ -20,11 +20,7 @@ class FakeMovieRepository(
     private val movies: Flow<List<Movie>> = FavoritesDBMock.favoriteIds
         .mapLatest { favoriteIds ->
             fakeMovies.map { movie ->
-                Movie(
-                    id = movie.id,
-                    title = movie.title,
-                    overview = movie.overview,
-                    imageUrl = movie.imageUrl,
+                movie.copy(
                     isFavorite = favoriteIds.contains(movie.id),
                 )
             }
@@ -39,20 +35,10 @@ class FakeMovieRepository(
         FavoritesDBMock.favoriteIds
             .mapLatest { favoriteIds ->
                 val movieDetails = MoviesMock.getMovieDetails(movieId)
-                MovieDetails(
-                    movie = Movie(
-                        id = movieDetails.movie.id,
-                        title = movieDetails.movie.title,
-                        overview = movieDetails.movie.overview,
-                        imageUrl = movieDetails.movie.imageUrl,
+                movieDetails.copy(
+                    movie = movieDetails.movie.copy(
                         isFavorite = favoriteIds.contains(movieId),
                     ),
-                    voteAverage = movieDetails.voteAverage,
-                    releaseDate = movieDetails.releaseDate,
-                    language = movieDetails.language,
-                    runtime = movieDetails.runtime,
-                    crew = movieDetails.crew,
-                    cast = movieDetails.cast,
                 )
             }
             .flowOn(ioDispatcher)

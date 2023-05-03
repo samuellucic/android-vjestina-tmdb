@@ -70,7 +70,7 @@ fun MovieDetailsRoute(
 
     MovieDetailsScreen(
         movieDetailsViewState = movieDetailsViewState,
-        onFavoriteChange = { viewModel.toggleFavorite() },
+        onFavoriteChange = viewModel::toggleFavorite,
         modifier = Modifier,
     )
 }

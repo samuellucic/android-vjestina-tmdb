@@ -44,9 +44,7 @@ fun FavoritesRoute(
 
     FavoritesScreen(
         favoritesViewState = favoritesViewState,
-        onFavoriteChange = { movieId ->
-            viewModel.toggleFavorite(movieId)
-        },
+        onFavoriteChange = viewModel::toggleFavorite,
         onClick = onNavigateToMovieDetails,
         modifier = Modifier
             .padding(
