@@ -10,7 +10,8 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -36,13 +37,14 @@ private val favoritesViewState = favoritesMapper.toFavoritesViewState(MoviesMock
 
 @Composable
 fun FavoritesRoute(
+    viewModel: FavoritesViewModel,
     onNavigateToMovieDetails: (Int) -> Unit,
 ) {
-    val mutableFavoritesViewState = remember { mutableStateOf(favoritesViewState) }
+    val favoritesViewState: FavoritesViewState by viewModel.favoritesViewState.collectAsState()
 
     FavoritesScreen(
-        favoritesViewState = mutableFavoritesViewState,
-        onFavoriteChange = {},
+        favoritesViewState = favoritesViewState,
+        onFavoriteChange = viewModel::toggleFavorite,
         onClick = onNavigateToMovieDetails,
         modifier = Modifier
             .padding(
@@ -55,8 +57,8 @@ fun FavoritesRoute(
 
 @Composable
 fun FavoritesScreen(
-    favoritesViewState: MutableState<FavoritesViewState>,
-    onFavoriteChange: () -> Unit,
+    favoritesViewState: FavoritesViewState,
+    onFavoriteChange: (Int) -> Unit,
     onClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -88,14 +90,14 @@ fun FavoritesScreen(
             )
         }
         items(
-            items = favoritesViewState.value.favoriteMovies,
+            items = favoritesViewState.favoriteMovies,
             key = { favoriteMovie ->
                 favoriteMovie.id
             },
         ) { favoriteMovie ->
             MovieCard(
                 movieCardViewState = favoriteMovie.movieCardViewState,
-                onFavoriteChange = onFavoriteChange,
+                onFavoriteChange = { onFavoriteChange(favoriteMovie.id) },
                 onClick = { onClick(favoriteMovie.id) },
                 modifier = Modifier
                     .height(dimensionResource(id = R.dimen.movie_card_height))
@@ -110,7 +112,7 @@ fun FavoritesScreen(
 @Preview
 @Composable
 private fun FavoritesScreenPreview() {
-    val favoritesViewState = remember { mutableStateOf(favoritesViewState) }
+    val favoritesViewState by remember { mutableStateOf(favoritesViewState) }
     MovieAppTheme {
         FavoritesScreen(
             favoritesViewState = favoritesViewState,

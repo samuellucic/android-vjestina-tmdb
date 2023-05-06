@@ -20,6 +20,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -62,11 +63,14 @@ private val movieDetailsMapper: MovieDetailsMapper = MovieDetailsMapperImpl()
 val movieDetailsViewState = movieDetailsMapper.toMovieDetailsViewState(MoviesMock.getMovieDetails())
 
 @Composable
-fun MovieDetailsRoute() {
-    val mutableMovieDetailsViewState by remember { mutableStateOf(movieDetailsViewState) }
+fun MovieDetailsRoute(
+    viewModel: MovieDetailsViewModel
+) {
+    val movieDetailsViewState by viewModel.movieDetailsViewState.collectAsState()
 
     MovieDetailsScreen(
-        movieDetailsViewState = mutableMovieDetailsViewState,
+        movieDetailsViewState = movieDetailsViewState,
+        onFavoriteChange = viewModel::toggleFavorite,
         modifier = Modifier,
     )
 }
@@ -74,6 +78,7 @@ fun MovieDetailsRoute() {
 @Composable
 fun MovieDetailsScreen(
     movieDetailsViewState: MovieDetailsViewState,
+    onFavoriteChange: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -88,7 +93,7 @@ fun MovieDetailsScreen(
             imageUrl = movieDetailsViewState.imageUrl,
             voteAverage = movieDetailsViewState.voteAverage,
             isFavorite = movieDetailsViewState.isFavorite,
-            onFavoriteChange = {},
+            onFavoriteChange = onFavoriteChange,
             modifier = Modifier
                 .height(dimensionResource(id = R.dimen.movie_screen_height)),
         )
@@ -304,6 +309,7 @@ private fun MovieDetailPreview() {
     MovieAppTheme(darkTheme = false) {
         MovieDetailsScreen(
             movieDetailsViewState = movieDetailsViewState,
+            onFavoriteChange = {},
             modifier = Modifier,
         )
     }

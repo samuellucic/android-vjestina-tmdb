@@ -32,7 +32,7 @@ fun FavoriteButton(
         } else {
             ImageVector.vectorResource(id = R.drawable.heart_blank)
         },
-        contentDescription = "Favorite movie",
+        contentDescription = null,
         modifier = modifier
             .alpha(0.4f)
             .background(

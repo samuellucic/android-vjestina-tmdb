@@ -42,6 +42,8 @@ import endava.codebase.android.movieapp.ui.home.HomeRoute
 import endava.codebase.android.movieapp.ui.moviedetails.MovieDetailsRoute
 import endava.codebase.android.movieapp.ui.theme.Blue
 import endava.codebase.android.movieapp.ui.theme.spacing
+import org.koin.androidx.compose.getViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
 fun MainScreen() {
@@ -106,19 +108,27 @@ fun MainScreen() {
             ) {
                 composable(NavigationItem.HomeDestination.route) {
                     HomeRoute(
+                        viewModel = getViewModel(),
                         onNavigateToMovieDetails = onNavigateToMovieDetails,
                     )
                 }
                 composable(NavigationItem.FavoritesDestination.route) {
                     FavoritesRoute(
+                        viewModel = getViewModel(),
                         onNavigateToMovieDetails = onNavigateToMovieDetails,
                     )
                 }
                 composable(
                     route = MovieDetailsDestination.route,
-                    arguments = listOf(navArgument(MOVIE_ID_KEY) { type = NavType.StringType })
-                ) {
-                    MovieDetailsRoute()
+                    arguments = listOf(navArgument(MOVIE_ID_KEY) { type = NavType.IntType })
+                ) { navBackStackEntry ->
+                    val movieId = navBackStackEntry.arguments?.getInt(MOVIE_ID_KEY)
+
+                    MovieDetailsRoute(
+                        viewModel = getViewModel {
+                            parametersOf(movieId)
+                        }
+                    )
                 }
             }
         }

@@ -11,7 +11,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -50,46 +51,19 @@ val newReleasesCategoryViewState = homeScreenMapper.toHomeMovieCategoryViewState
 
 @Composable
 fun HomeRoute(
+    viewModel: HomeViewModel,
     onNavigateToMovieDetails: (Int) -> Unit,
 ) {
-    val mutableTrendingCategoryViewState = remember { mutableStateOf(trendingCategoryViewState) }
-    val mutableNewReleasesCategoryViewState =
-        remember { mutableStateOf(newReleasesCategoryViewState) }
-
-    val onCategoryClick = { id: Int ->
-        when (id) {
-            MovieCategory.POPULAR.ordinal, MovieCategory.TOP_RATED.ordinal -> {
-                mutableTrendingCategoryViewState.value =
-                    homeScreenMapper.toHomeMovieCategoryViewState(
-                        movieCategories = listOf(
-                            MovieCategory.POPULAR,
-                            MovieCategory.TOP_RATED
-                        ),
-                        selectedMovieCategory = MovieCategory.values()[id],
-                        movies = MoviesMock.getMoviesList(),
-                    )
-            }
-            MovieCategory.NOW_PLAYING.ordinal, MovieCategory.UPCOMING.ordinal -> {
-                mutableNewReleasesCategoryViewState.value =
-                    homeScreenMapper.toHomeMovieCategoryViewState(
-                        movieCategories = listOf(
-                            MovieCategory.NOW_PLAYING,
-                            MovieCategory.UPCOMING
-                        ),
-                        selectedMovieCategory = MovieCategory.values()[id],
-                        movies = MoviesMock.getMoviesList(),
-                    )
-            }
-        }
-    }
+    val trendingCategoryViewState: HomeMovieCategoryViewState by viewModel.homeTrendingViewState.collectAsState()
+    val newReleasesCategoryViewState: HomeMovieCategoryViewState by viewModel.homeNewReleasesViewState.collectAsState()
 
     MovieAppTheme {
         HomeScreen(
-            trendingCategoryViewState = mutableTrendingCategoryViewState,
-            newReleasesCategoryViewState = mutableNewReleasesCategoryViewState,
-            onFavoriteChange = {},
+            trendingCategoryViewState = trendingCategoryViewState,
+            newReleasesCategoryViewState = newReleasesCategoryViewState,
+            onFavoriteChange = viewModel::toggleFavorite,
             onClick = onNavigateToMovieDetails,
-            onCategoryClick = onCategoryClick,
+            onCategoryClick = viewModel::changeCategory,
             modifier = Modifier
                 .padding(
                     top = MaterialTheme.spacing.medium,
@@ -101,9 +75,9 @@ fun HomeRoute(
 
 @Composable
 fun HomeScreen(
-    trendingCategoryViewState: MutableState<HomeMovieCategoryViewState>,
-    newReleasesCategoryViewState: MutableState<HomeMovieCategoryViewState>,
-    onFavoriteChange: () -> Unit,
+    trendingCategoryViewState: HomeMovieCategoryViewState,
+    newReleasesCategoryViewState: HomeMovieCategoryViewState,
+    onFavoriteChange: (Int) -> Unit,
     onClick: (Int) -> Unit,
     onCategoryClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -146,8 +120,8 @@ fun HomeScreen(
 @Composable
 private fun MovieCategoryScreen(
     title: String,
-    homeMovieCategoryViewState: MutableState<HomeMovieCategoryViewState>,
-    onFavoriteChange: () -> Unit,
+    homeMovieCategoryViewState: HomeMovieCategoryViewState,
+    onFavoriteChange: (Int) -> Unit,
     onClick: (Int) -> Unit,
     onCategoryClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -178,7 +152,7 @@ private fun MovieCategoryScreen(
                 )
         ) {
             items(
-                items = homeMovieCategoryViewState.value.movieCategories,
+                items = homeMovieCategoryViewState.movieCategories,
                 key = { movieCategory ->
                     movieCategory.itemId
                 }
@@ -195,7 +169,7 @@ private fun MovieCategoryScreen(
         }
         LazyRow {
             items(
-                items = homeMovieCategoryViewState.value.movies,
+                items = homeMovieCategoryViewState.movies,
                 key = { movie ->
                     movie.id
                 },
@@ -205,7 +179,7 @@ private fun MovieCategoryScreen(
                         imageUrl = movie.movieCardViewState.imageUrl,
                         isFavorite = movie.movieCardViewState.isFavorite,
                     ),
-                    onFavoriteChange = onFavoriteChange,
+                    onFavoriteChange = { onFavoriteChange(movie.id) },
                     onClick = { onClick(movie.id) },
                     modifier = Modifier
                         .width(160.dp)
@@ -221,9 +195,8 @@ private fun MovieCategoryScreen(
 @Preview
 @Composable
 fun HomeScreenPreview() {
-    val mutableTrendingCategoryViewState = remember { mutableStateOf(trendingCategoryViewState) }
-    val mutableNewReleasesCategoryViewState =
-        remember { mutableStateOf(newReleasesCategoryViewState) }
+    val mutableTrendingCategoryViewState by remember { mutableStateOf(trendingCategoryViewState) }
+    val mutableNewReleasesCategoryViewState by remember { mutableStateOf(newReleasesCategoryViewState) }
 
     MovieAppTheme {
         HomeScreen(
