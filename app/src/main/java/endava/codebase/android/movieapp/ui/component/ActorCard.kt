@@ -2,9 +2,7 @@ package endava.codebase.android.movieapp.ui.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -20,7 +18,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import endava.codebase.android.movieapp.mock.MoviesMock
 import endava.codebase.android.movieapp.ui.theme.Gray700
 import endava.codebase.android.movieapp.ui.theme.proximaNova
 import endava.codebase.android.movieapp.ui.theme.spacing
@@ -94,17 +91,17 @@ fun ActorCard(
 @Preview
 @Composable
 private fun ActorCardPreview() {
-    val actor = MoviesMock.getActor()
-
-    ActorCard(
-        ActorCardViewState(
-            actor.imageUrl.toString(),
-            actor.name,
-            actor.character
-        ),
-        Modifier
-            .height(320.dp)
-            .width(190.dp)
-            .padding(6.dp),
-    )
+//    val actor = MoviesMock.getActor()
+//
+//    ActorCard(
+//        ActorCardViewState(
+//            actor.imageUrl.toString(),
+//            actor.name,
+//            actor.character
+//        ),
+//        Modifier
+//            .height(320.dp)
+//            .width(190.dp)
+//            .padding(6.dp),
+//    )
 }

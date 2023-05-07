@@ -3,7 +3,8 @@ package endava.codebase.android.movieapp.ui.moviedetails
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import endava.codebase.android.movieapp.data.repository.MovieRepository
-import endava.codebase.android.movieapp.mock.MoviesMock
+import endava.codebase.android.movieapp.model.Movie
+import endava.codebase.android.movieapp.model.MovieDetails
 import endava.codebase.android.movieapp.ui.moviedetails.mapper.MovieDetailsMapper
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -25,7 +26,23 @@ class MovieDetailsViewModel(
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.Eagerly,
-                initialValue = movieDetailsMapper.toMovieDetailsViewState(MoviesMock.getMovieDetails()),
+                initialValue = movieDetailsMapper.toMovieDetailsViewState(
+                    MovieDetails(
+                        movie = Movie(
+                            id = 1,
+                            title = "",
+                            overview = "",
+                            imageUrl = null,
+                            isFavorite = false,
+                        ),
+                        voteAverage = 0f,
+                        releaseDate = "",
+                        language = "",
+                        runtime = 0,
+                        cast = listOf(),
+                        crew = listOf(),
+                    )
+                ),
             )
 
     fun toggleFavorite() {
