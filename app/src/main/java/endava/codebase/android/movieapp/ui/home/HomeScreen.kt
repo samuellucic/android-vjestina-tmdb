@@ -17,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import endava.codebase.android.movieapp.R
@@ -29,19 +28,6 @@ import endava.codebase.android.movieapp.ui.theme.Blue
 import endava.codebase.android.movieapp.ui.theme.MovieAppTheme
 import endava.codebase.android.movieapp.ui.theme.proximaNova
 import endava.codebase.android.movieapp.ui.theme.spacing
-
-// private val homeScreenMapper: HomeScreenMapper = HomeScreenMapperImpl()
-
-// val trendingCategoryViewState = homeScreenMapper.toHomeMovieCategoryViewState(
-//     movieCategories = listOf(MovieCategory.POPULAR, MovieCategory.TOP_RATED),
-//     selectedMovieCategory = MovieCategory.POPULAR,
-//     movies = MoviesMock.getMoviesList(),
-// )
-// val newReleasesCategoryViewState = homeScreenMapper.toHomeMovieCategoryViewState(
-//     movieCategories = listOf(MovieCategory.NOW_PLAYING, MovieCategory.UPCOMING),
-//     selectedMovieCategory = MovieCategory.NOW_PLAYING,
-//     movies = MoviesMock.getMoviesList(),
-// )
 
 @Composable
 fun HomeRoute(
@@ -184,25 +170,4 @@ private fun MovieCategoryScreen(
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun HomeScreenPreview() {
-//    val mutableTrendingCategoryViewState by remember { mutableStateOf(trendingCategoryViewState) }
-//    val mutableNewReleasesCategoryViewState by remember { mutableStateOf(newReleasesCategoryViewState) }
-//
-//    MovieAppTheme {
-//        HomeScreen(
-//            trendingCategoryViewState = mutableTrendingCategoryViewState,
-//            newReleasesCategoryViewState = mutableNewReleasesCategoryViewState,
-//            onFavoriteChange = {},
-//            onClick = {},
-//            onCategoryClick = {},
-//            modifier = Modifier
-//                .padding(
-//                    start = MaterialTheme.spacing.small,
-//                ),
-//        )
-//    }
 }

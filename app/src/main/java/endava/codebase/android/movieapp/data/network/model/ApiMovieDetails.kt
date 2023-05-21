@@ -7,16 +7,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MovieCreditsResponse(
-    @SerialName("id")
-    val id: Int,
-    @SerialName("cast")
-    val cast: List<ApiCast>,
-    @SerialName("crew")
-    val crew: List<ApiCrew>
-)
-
-@Serializable
 data class ApiMovieDetails(
     @SerialName("id")
     val id: Int,
@@ -56,7 +46,7 @@ data class ApiMovieDetails(
                 apiCrew.toCrew()
             },
             cast = cast.map { apiCast ->
-                apiCast.toCast()
+                apiCast.toActor()
             },
         )
     }

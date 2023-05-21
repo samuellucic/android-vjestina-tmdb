@@ -13,11 +13,11 @@ interface FavoriteMovieDao {
     fun favorites(): Flow<List<DbFavoriteMovie>>
 
     @Query("SELECT * FROM favorite_movies WHERE id = :id")
-    fun findFavorite(id: Int): Flow<List<DbFavoriteMovie>>
+    suspend fun findFavorite(id: Int): DbFavoriteMovie
 
     @Insert
-    fun insertFavorites(vararg favoriteMovies: DbFavoriteMovie)
+    suspend fun insertFavorites(vararg favoriteMovies: DbFavoriteMovie)
 
     @Delete
-    fun deleteFavorites(vararg favoriteMovies: DbFavoriteMovie)
+    suspend fun deleteFavorites(vararg favoriteMovies: DbFavoriteMovie)
 }

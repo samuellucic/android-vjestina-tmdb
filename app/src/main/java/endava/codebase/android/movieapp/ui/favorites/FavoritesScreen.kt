@@ -17,16 +17,12 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import endava.codebase.android.movieapp.R
 import endava.codebase.android.movieapp.ui.component.MovieCard
 import endava.codebase.android.movieapp.ui.theme.Blue
 import endava.codebase.android.movieapp.ui.theme.proximaNova
 import endava.codebase.android.movieapp.ui.theme.spacing
-
-// private val favoritesMapper: FavoritesMapper = FavoritesMapperImpl()
-// private val favoritesViewState = favoritesMapper.toFavoritesViewState(MoviesMock.getMoviesList())
 
 @Composable
 fun FavoritesRoute(
@@ -100,18 +96,4 @@ fun FavoritesScreen(
             )
         }
     }
-}
-
-@Preview
-@Composable
-private fun FavoritesScreenPreview() {
-//    val favoritesViewState by remember { mutableStateOf(favoritesViewState) }
-//    MovieAppTheme {
-//        FavoritesScreen(
-//            favoritesViewState = favoritesViewState,
-//            onFavoriteChange = {},
-//            onClick = {},
-//            modifier = Modifier,
-//        )
-//    }
 }

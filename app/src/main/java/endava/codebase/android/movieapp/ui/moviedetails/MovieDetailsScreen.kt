@@ -31,7 +31,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -51,9 +50,6 @@ private const val OVERLAY_START_X = 90.75f
 private const val OVERLAY_START_Y = 151.5f
 private const val OVERLAY_END_X = 272.25f
 private const val OVERLAY_END_Y = 151.5f
-
-// private val movieDetailsMapper: MovieDetailsMapper = MovieDetailsMapperImpl()
-// val movieDetailsViewState = movieDetailsMapper.toMovieDetailsViewState(MoviesMock.getMovieDetails())
 
 @Composable
 fun MovieDetailsRoute(
@@ -292,18 +288,4 @@ fun CastScreen(
             }
         }
     }
-}
-
-@Preview
-@Composable
-private fun MovieDetailPreview() {
-//    val movieDetailsViewState by remember { mutableStateOf(movieDetailsViewState) }
-//
-//    MovieAppTheme(darkTheme = false) {
-//        MovieDetailsScreen(
-//            movieDetailsViewState = movieDetailsViewState,
-//            onFavoriteChange = {},
-//            modifier = Modifier,
-//        )
-//    }
 }

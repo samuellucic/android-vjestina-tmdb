@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import endava.codebase.android.movieapp.ui.theme.spacing
@@ -57,24 +56,4 @@ fun MovieCard(
             )
         }
     }
-}
-
-@Preview
-@Composable
-fun MovieCardPreview() {
-//    val isFavorite = remember { mutableStateOf(false) }
-//
-//    val movie = MoviesMock.getMoviesList()[0]
-//    MovieCard(
-//        movieCardViewState = MovieCardViewState(
-//            imageUrl = movie.imageUrl.toString(),
-//            isFavorite = isFavorite.value,
-//        ),
-//        onClick = { },
-//        onFavoriteChange = { isFavorite.value = !isFavorite.value },
-//        modifier = Modifier
-//            .height(450.dp)
-//            .width(300.dp)
-//            .padding(MaterialTheme.spacing.small),
-//    )
 }

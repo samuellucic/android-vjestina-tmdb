@@ -86,13 +86,23 @@ class MovieRepositoryImpl(
         movieDao.insertFavorites(
             DbFavoriteMovie(
                 id = movieId,
-                posterUrl = findMovie(movieId).imageUrl.toString(),
+                posterUrl = findMovie(movieId)?.imageUrl.toString(),
             )
         )
     }
 
-    private suspend fun findMovie(movieId: Int): Movie {
-        return movieDetails(movieId).first().movie
+    private suspend fun findMovie(movieId: Int): Movie? {
+        moviesByCategory.values
+            .forEach { moviesFlow ->
+                moviesFlow.first()
+                    .forEach { movie ->
+                        if (movieId == movie.id) {
+                            return movie
+                        }
+                    }
+            }
+
+        return null
     }
 
     override suspend fun removeMovieFromFavorites(movieId: Int) {
@@ -104,7 +114,7 @@ class MovieRepositoryImpl(
     }
 
     override suspend fun toggleFavorite(movieId: Int) = withContext(bgDispatcher) {
-        if (movieDao.findFavorite(movieId).first().isEmpty()) {
+        if (movieDao.findFavorite(movieId) == null) {
             addMovieToFavorites(movieId)
         } else {
             removeMovieFromFavorites(movieId)
