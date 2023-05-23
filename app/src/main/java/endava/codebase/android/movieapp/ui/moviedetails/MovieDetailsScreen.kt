@@ -22,8 +22,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -33,23 +31,18 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import endava.codebase.android.movieapp.R
-import endava.codebase.android.movieapp.mock.MoviesMock
 import endava.codebase.android.movieapp.ui.component.ActorCard
 import endava.codebase.android.movieapp.ui.component.ActorCardViewState
 import endava.codebase.android.movieapp.ui.component.CrewItem
 import endava.codebase.android.movieapp.ui.component.CrewItemViewState
 import endava.codebase.android.movieapp.ui.component.FavoriteButton
 import endava.codebase.android.movieapp.ui.component.UserScoreProgressBar
-import endava.codebase.android.movieapp.ui.moviedetails.mapper.MovieDetailsMapper
-import endava.codebase.android.movieapp.ui.moviedetails.mapper.MovieDetailsMapperImpl
 import endava.codebase.android.movieapp.ui.theme.Blue
 import endava.codebase.android.movieapp.ui.theme.Gray300
-import endava.codebase.android.movieapp.ui.theme.MovieAppTheme
 import endava.codebase.android.movieapp.ui.theme.proximaNova
 import endava.codebase.android.movieapp.ui.theme.spacing
 
@@ -57,10 +50,6 @@ private const val OVERLAY_START_X = 90.75f
 private const val OVERLAY_START_Y = 151.5f
 private const val OVERLAY_END_X = 272.25f
 private const val OVERLAY_END_Y = 151.5f
-
-private val movieDetailsMapper: MovieDetailsMapper = MovieDetailsMapperImpl()
-
-val movieDetailsViewState = movieDetailsMapper.toMovieDetailsViewState(MoviesMock.getMovieDetails())
 
 @Composable
 fun MovieDetailsRoute(
@@ -241,7 +230,7 @@ fun CrewScreen(
         items(
             items = crew,
             key = { crewman ->
-                crewman.id
+                crewman.id.toString() + crewman.job
             },
         ) { crewman ->
             CrewItem(
@@ -298,19 +287,5 @@ fun CastScreen(
                 )
             }
         }
-    }
-}
-
-@Preview
-@Composable
-private fun MovieDetailPreview() {
-    val movieDetailsViewState by remember { mutableStateOf(movieDetailsViewState) }
-
-    MovieAppTheme(darkTheme = false) {
-        MovieDetailsScreen(
-            movieDetailsViewState = movieDetailsViewState,
-            onFavoriteChange = {},
-            modifier = Modifier,
-        )
     }
 }
