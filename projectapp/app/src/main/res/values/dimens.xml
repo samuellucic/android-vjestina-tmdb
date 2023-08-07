@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="notes_score_size">20dp</dimen>
+    <dimen name="add_note_floating_padding">15dp</dimen>
+    <dimen name="add_note_text_padding">5dp</dimen>
+    <dimen name="top_bar_height">64dp</dimen>
+    <dimen name="note_item_horizontal_pad">8dp</dimen>
+    <dimen name="note_item_vertical_pad">8dp</dimen>
+    <dimen name="date_item_horizontal_pad">8dp</dimen>
+    <dimen name="date_item_vertical_pad">8dp</dimen>
+    <dimen name="arrow_back_size">40dp</dimen>
+    <dimen name="arrow_done_size">40dp</dimen>
+</resources>
